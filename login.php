@@ -12,8 +12,28 @@ $messages = [];
 
 // Si le formulaire a été souis
 if (isset($_POST['loginUser'])) {
+    $email = trim($_POST['email']);
+    $password =  $_POST['password'];
     //@todo appeler une méthode verifyUserLoginPassword qui retourne false ou retourne un tableau avec l'utisateur
     $user = verifyUserLoginPassword($pdo, $_POST['email'], $_POST['password']);
+
+    if ($user !== false) 
+
+        $_SESSION['user'] = $user;
+
+        if (isset($user['role']) && $user['role'] === 'admin') {
+            header('Location: admin.php');
+            exit;
+        } else {
+            header('Location: index.php');
+            exit;
+        }
+
+    } else {
+        $errors[] = "Utilisateur ou mot de passe incorrect";
+    
+
+    
 
     /* @todo si on récupère un utilisateur, alors on stocke l'utilisateur dans la session
         et on redirige l'utilisateur soit vers l'admin (si role admin) soit vers l'accueil
@@ -26,6 +46,14 @@ if (isset($_POST['loginUser'])) {
     <h1>Login</h1>
 
     <?php // @todo afficher les erreurs avec la structure suivante :
+    if (!empty($errors)) {
+    foreach ($errors as $error) {
+        echo '
+        <div class="alert alert-danger" role="alert">
+            ' . htmlspecialchars($error) . '
+        </div>';
+    }
+    }
         /*
         <div class="alert alert-danger" role="alert">
             Utilisatuer ou mot de passe incorrect

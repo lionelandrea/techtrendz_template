@@ -9,6 +9,33 @@ require_once 'templates/header.php';
 $errors = [];
 $messages = [];
 if (isset($_POST['addUser'])) {
+    
+    $first_name = trim($_POST['first_name'] ?? '');
+    $last_name  = trim($_POST['last_name'] ?? '');
+    $email      = trim($_POST['email'] ?? '');
+    $password   = $_POST['password'] ?? '';
+
+    
+    if (empty($first_name) || empty($last_name) || empty($email) || empty($password)) {
+        $errors[] = "Tous les champs sont obligatoires";
+    }
+
+    if (empty($errors)) {
+
+        $success = addUser(
+            $pdo,
+            $first_name,
+            $last_name,
+            $email,
+            $password
+        );
+
+        if ($success) {
+            $messages[] = "Merci pour votre inscription";
+        } else {
+            $errors[] = "Une erreur s'est produite lors de votre inscription";
+        }
+    }
     /*
         @todo On appelle addUser pour ajouter l'utilisateur
         si true a été retourné, on affiche un message "Merci pour votre inscription"

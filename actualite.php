@@ -4,9 +4,19 @@ require_once __DIR__ . "/lib/pdo.php";
 require_once __DIR__ . "/lib/article.php";
 require_once __DIR__ . "/templates/header.php";
 
+$errors = [];
 
 //@todo On doit récupérer l'id en paramètre d'url et appeler la fonction getArticleById récupérer l'article
+$id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
+if ($id <= 0) {
+    $errors[] = "ID de l'article invalide.";
+} else {
+    $article = getArticleById($pdo, $id);
+    if (!$article) {
+        $errors[] = "Article introuvable.";
+    }
+}
 ?>
 
 
