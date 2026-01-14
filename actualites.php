@@ -5,7 +5,7 @@ require_once __DIR__ . "/lib/article.php";
 require_once __DIR__ . "/templates/header.php";
 
 // @todo On doit appeler getArticale pour récupérer les articles et faire une boucle pour les afficher
-// $articles = getArticles($pdo);
+ $articles = getArticles($pdo);
 
 ?>
 
