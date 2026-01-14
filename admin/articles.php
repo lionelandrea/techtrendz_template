@@ -23,6 +23,15 @@ $totalArticles = getTotalArticles($pdo);
 $totalPages = ceil($totalArticles / _ADMIN_ITEM_PER_PAGE_);
 
 */
+if (isset($_GET['page'])) {
+    $page = (int)$_GET['page'];
+} else {
+    $page = 1;
+}
+
+$articles = getArticles($pdo, _ADMIN_ITEM_PER_PAGE_, $page);
+$totalArticles = getTotalArticles($pdo);
+$totalPages = ceil($totalArticles / _ADMIN_ITEM_PER_PAGE_);
 
 ?>
 

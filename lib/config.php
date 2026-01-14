@@ -6,4 +6,6 @@ define("_DB_NAME_", "techtrendz");
 define("_DB_USER_", "root");
 define("_DB_PASSWORD_", "");
 define("_APP_EMAIL_", "ky9.test@gmail.com");
+define('_HOMEPAGE_ITEM_LIMIT_', 3);
+
 
