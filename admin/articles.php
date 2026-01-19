@@ -7,9 +7,9 @@ require_once __DIR__ . "/../lib/pdo.php";
 require_once __DIR__ . "/../lib/article.php";
 require_once __DIR__ . "/templates/header.php";
 
-/*
 
-@todo décommenter ce code une fois toutes les fonctions codées
+
+//@todo décommenter ce code une fois toutes les fonctions codées
 
 if (isset($_GET['page'])) {
   $page = (int)$_GET['page'];
@@ -22,7 +22,7 @@ $totalArticles = getTotalArticles($pdo);
 
 $totalPages = ceil($totalArticles / _ADMIN_ITEM_PER_PAGE_);
 
-*/
+
 
 // pagination (code désormais actif)
 if (isset($_GET['page'])) {

@@ -28,10 +28,22 @@ function getArticles(PDO $pdo, ?int $limit = null, ?int $page = null):array|bool
         @todo faire la requête de récupération des articles
         La requête sera différente selon les paramètres passés, commencer déjà juste avec la base en ignrorant les autre params
     */
+    $sql = "SELECT * FROM articles ORDER BY id DESC";
 
-    //$query->execute();
-    //$result = $query->fetchAll(PDO::FETCH_ASSOC);
-    //return $result;
+    if ($limit !== null && $page !== null) {
+        $offset = ($page - 1) * $limit;
+        $sql .= " LIMIT :limit OFFSET :offset";
+        $query = $pdo->prepare($sql);
+        $query->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $query->bindValue(':offset', $offset, PDO::PARAM_INT);
+    } else {
+        $query = $pdo->prepare($sql);
+    }
+
+
+    $query->execute();
+    $result = $query->fetchAll(PDO::FETCH_ASSOC);
+    return $result;
 }
 
 function getTotalArticles(PDO $pdo):int|bool {
@@ -42,9 +54,18 @@ function getTotalArticles(PDO $pdo):int|bool {
     /*
         @todo récupérer le nombre total d'article (avec COUNT)
     */
+    $query = $pdo->prepare("SELECT COUNT(*) AS total FROM articles");
+    $query->execute();
 
     //$result = $query->fetch(PDO::FETCH_ASSOC);
     //return $result['total'];
+
+
+     $result = $query->fetch(PDO::FETCH_ASSOC);
+    if ($result && isset($result['total'])) {
+        return (int)$result['total'];
+    }
+    return false;
 }
 
 function saveArticle(PDO $pdo, string $title, string $content, ?string $image, int $category_id, ?int $id = null):bool {
@@ -58,6 +79,10 @@ function saveArticle(PDO $pdo, string $title, string $content, ?string $image, i
             @todo si id est null, alors on fait une requête d'insection
         */
         //$query = ...
+        $query = $pdo->prepare("
+            INSERT INTO articles (title, content, image, category_id)
+            VALUES (:title, :content, :image, :category_id)
+        ");
     } else {
         $query = $pdo->prepare("
             UPDATE articles 
@@ -70,8 +95,17 @@ function saveArticle(PDO $pdo, string $title, string $content, ?string $image, i
         */
         
         //$query = ...
+
+         $query = $pdo->prepare("
+            UPDATE articles
+            SET title = :title, content = :content, image = :image, category_id = :category_id
+            WHERE id = :id
+        ");
         
         //$query->bindValue(':id', $id, $pdo::PARAM_INT);
+
+         $query->bindValue(':id', $id, PDO::PARAM_INT);
+        
     }
     $query->bindValue(':title', $title);
     $query->bindValue(':content', $content);
@@ -99,12 +133,12 @@ function deleteArticle(PDO $pdo, int $id):bool {
         @todo Faire la requête de suppression
     */
 
-    /*
+    
     $query->execute();
     if ($query->rowCount() > 0) {
         return true;
     } else {
         return false;
     }
-    */
+    
 }
