@@ -3,8 +3,8 @@
 * Faire un fork de ce repository puis faire clone de votre fork
 * Vous devez ensuite créer une base de données mysql et importer le fichier bdd_techtrendz.sql.
 * La base de données contient déjà un jeu de données avec également deux utilisateurs (un administrateur et un utilisateur) :
-    * user@test.com, mot de passe : test (à ne pas utiliser sur un site en production :) )
-    * admin@test.com, mot de passe : test (à ne pas utiliser sur un site en production :) )
+    * user@test.com, mot de passe : test (à ne pas utiliser sur un site en production :) 
+    * admin@test.com, mot de passe : test (à ne pas utiliser sur un site en production :) 
 
 * Modifiez le fichier lib/config.php en y ajoutant les données de votre base de données.
 * Dans le terminal de vscode, exécuter la commande `php -S localhost:8000`
