@@ -141,4 +141,5 @@ function deleteArticle(PDO $pdo, int $id):bool {
         return false;
     }
     
+    
 }
