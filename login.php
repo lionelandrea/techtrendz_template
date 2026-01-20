@@ -22,7 +22,7 @@ if (isset($_POST['loginUser'])) {
         $_SESSION['user'] = $user;
 
         if (isset($user['role']) && $user['role'] === 'admin') {
-            header('Location: admin.php');
+            header('Location: /admin/');
             exit;
         } else {
             header('Location: index.php');
